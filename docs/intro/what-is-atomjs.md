@@ -38,5 +38,5 @@ The current phase focuses on the **core runtime**: rendering, JSX, and component
 Future iterations will expand into state management, routing, and developer tooling.
 
 :::tip
-If you’re starting fresh, check out the [Introduction](./intro.md) to see how to install AtomJS Core and run your first project.
+If you’re starting fresh, check out the [Introduction](./../intro.md) to see how to install AtomJS Core and run your first project.
 :::

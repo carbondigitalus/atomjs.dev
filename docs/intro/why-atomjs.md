@@ -49,5 +49,5 @@ Next, the project will expand into:
 ---
 
 :::tip
-If you’re ready to dive in, head to the [Quickstart guide](./intro.md) and run AtomJS in your first project.
+If you’re ready to dive in, head to the [Quickstart guide](./quick-start.md) and run AtomJS in your first project.
 :::

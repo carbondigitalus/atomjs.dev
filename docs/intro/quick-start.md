@@ -14,6 +14,7 @@ AtomJS Core is distributed as an **npm package**, so you can add it to any TypeS
 
 -   [Node.js](https://nodejs.org/en/download/) version 18.0 or above
 -   A code editor (VS Code recommended)
+-   We recommend the use of Node Version Manager over Node.js
 
 ---
 
@@ -114,5 +115,5 @@ By default, Vite will serve your app at:
 ---
 
 :::tip Next Step
-Head over to [Components](../core-concepts/components.md) to learn how AtomJS components work.
+Head over to [Element Creation](../core-concepts/element-creation.md) to learn how AtomJS components work.
 :::
