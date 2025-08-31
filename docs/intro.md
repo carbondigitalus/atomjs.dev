@@ -2,46 +2,60 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Introduction to AtomJS
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Welcome to **AtomJS** — a new class-based React alternative that combines React’s powerful component model with Vue’s simplicity, built entirely with TypeScript.
+
+AtomJS gives you a lightweight virtual DOM, JSX runtime, and modern developer tooling, all designed for **clarity, performance, and scalability**.
 
 ## Getting Started
 
-Get started by **creating a new site**.
-
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+You can add AtomJS Core to any TypeScript + Vite project.
 
 ### What you'll need
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+-   [Node.js](https://nodejs.org/en/download/) version 18.0 or above
+-   A project set up with **Vite** (recommended) or another modern build tool that supports JSX/TSX
 
-## Generate a new site
+## Install AtomJS Core
 
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
+Install AtomJS Core as a dependency:
 
 ```bash
-npm init docusaurus@latest my-website classic
+npm install @atomdev/core
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+This package provides:
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+-   The AtomJS runtime
+-   Virtual DOM engine
+-   JSX runtime (`jsx`, `jsxs`, `jsxDEV`)
+-   DOM rendering utilities
+-   TypeScript types
 
-## Start your site
+## Start a Project (with Vite)
 
-Run the development server:
+If you don’t have a project yet, create one with Vite:
 
 ```bash
-cd my-website
-npm run start
+npm create vite@latest my-app -- --template vanilla-ts
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+Then install AtomJS Core:
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+```bash
+cd my-app
+npm install @atomdev/core
+```
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+## Run the Project
+
+Start your dev server with:
+
+```bash
+npm run dev
+```
+
+By default, Vite will serve your project at:
+
+👉 [http://localhost:5173/](http://localhost:5173/)
