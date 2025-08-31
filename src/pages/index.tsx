@@ -1,44 +1,49 @@
-import { Geist, Geist_Mono } from 'next/font/google';
+import type { ReactNode } from 'react';
+import clsx from 'clsx';
+import Link from '@docusaurus/Link';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Layout from '@theme/Layout';
+import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import Heading from '@theme/Heading';
 
-const geistSans = Geist({
-    variable: '--font-geist-sans',
-    subsets: ['latin'],
-});
+import styles from './index.module.css';
 
-const geistMono = Geist_Mono({
-    variable: '--font-geist-mono',
-    subsets: ['latin'],
-});
-
-export default function Home() {
+function HomepageHeader() {
+    const { siteConfig } = useDocusaurusContext();
     return (
-        <div
-            className={`${geistSans.className} ${geistMono.className} font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20`}
-        >
-            <main className='flex flex-col gap-[32px] row-start-2 items-center sm:items-start w-2xl'>
-                <h1 className='font-mono list-inside list-decimal text-3xl text-center sm:text-left'>
-                    Welcome to AtomJS!
-                </h1>
-                <p className='mb-2 tracking-[-.01em]'>Build with Atom – The fundamental building blocks of UI</p>
-                <p className='tracking-[-.01em]'>
-                    AtomJS is a class-based React alternative that combines the best aspects of React&apos;s component
-                    model with Vue&apos;s simplicity, built from the ground up with TypeScript.
-                </p>
-                <p className='tracking-[-.01em]'>
-                    We are in the process of building out our docs. Once that is life, you will see them here. In the
-                    meantime, you can actively start using AtomJS.
-                </p>
-                <div className='flex gap-4 items-center flex-col sm:flex-row'>
-                    <a
-                        className='rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto'
-                        href='https://github.com/carbondigitalus/atom-core/'
-                        target='_blank'
-                        rel='noopener noreferrer'
+        <header className={clsx('hero hero--primary', styles.heroBanner)}>
+            <div className='container'>
+                <Heading
+                    as='h1'
+                    className='hero__title'
+                >
+                    {siteConfig.title}
+                </Heading>
+                <p className='hero__subtitle'>{siteConfig.tagline}</p>
+                <div className={styles.buttons}>
+                    <Link
+                        className='button button--secondary button--lg'
+                        to='/docs/intro'
                     >
-                        View Github Repo
-                    </a>
+                        Get Started
+                    </Link>
                 </div>
+            </div>
+        </header>
+    );
+}
+
+export default function Home(): ReactNode {
+    const { siteConfig } = useDocusaurusContext();
+    return (
+        <Layout
+            title={`Hello from ${siteConfig.title}`}
+            description='Description will go into a meta tag in <head />'
+        >
+            <HomepageHeader />
+            <main>
+                <HomepageFeatures />
             </main>
-        </div>
+        </Layout>
     );
 }
