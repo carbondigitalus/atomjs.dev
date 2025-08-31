@@ -1,0 +1,144 @@
+---
+title: beforeMount()
+description: Run non-DOM setup right after the constructor, before the first render.
+sidebar_position: 1
+---
+
+# beforeMount()
+
+**Phase:** Mounting  
+**Timing:** After the constructor, **before** the first `render()` and before any DOM is inserted.
+
+## Signature
+
+```ts
+beforeMount(): void
+```
+
+### Access inside the hook
+
+-   this.props — merged with defaultProps, validated by propTypes (if provided)
+-   this.state — initialized in the constructor
+-   this.setState(partial) — allowed during mount; merges for the first render and does not schedule an extra render
+
+## Rules
+
+-   Called once per instance
+-   Runs synchronously (don’t await here)
+-   No DOM access (component DOM doesn’t exist yet)
+-   Errors are caught; initial render still proceeds
+
+## Common Patterns
+
+### Example 1
+
+```tsx
+class MyComponent extends AtomComponent<{ url: string }, { connected: boolean }> {
+    private ws?: WebSocket;
+    private timer?: number;
+
+    constructor(p: { url: string }) {
+        super(p);
+        this.state = { connected: false };
+    }
+
+    beforeMount() {
+        this.ws = new WebSocket(this.props.url);
+        this.ws.onopen = () => this.setState({ connected: true });
+        this.timer = setInterval(() => this.fetchData(), 5000);
+        window.addEventListener('resize', this.handleResize);
+    }
+
+    beforeUnmount() {
+        if (this.timer) clearInterval(this.timer);
+        try {
+            this.ws?.close();
+        } catch {}
+        window.removeEventListener('resize', this.handleResize);
+    }
+
+    handleResize = () => {};
+    fetchData() {}
+}
+```
+
+### Example 2
+
+```tsx
+class DataComponent extends AtomComponent<{}, { loading: boolean; data: unknown; error?: string }> {
+    constructor(p: {}) {
+        super(p);
+        this.state = { loading: true, data: null };
+    }
+    beforeMount() {
+        this.loadInitialData();
+    }
+    private async loadInitialData() {
+        try {
+            const res = await fetch('/api/initial-data');
+            this.setState({ data: await res.json(), loading: false });
+        } catch (e) {
+            const msg = e instanceof Error ? e.message : String(e);
+            this.setState({ loading: false, error: msg });
+        }
+    }
+}
+```
+
+### Example 3
+
+```tsx
+class ChartComponent extends AtomComponent<
+{ chartType?: string; initialData?: number[]; chartOptions?: Record<string, unknown> },
+{ chartReady: boolean }
+
+> {
+> private chartConfig?: { type: string; data: number[]; options: Record<string, unknown> };
+> constructor(p: any) { super(p); this.state = { chartReady: false }; }
+> beforeMount() {
+
+    this.chartConfig = {
+      type: this.props.chartType ?? 'line',
+      data: this.props.initialData ?? [],
+      options: { responsive: true, ...(this.props.chartOptions ?? {}) }
+    };
+    this.setState({ chartReady: true });
+
+}
+}
+```
+
+### Example 4
+
+```tsx
+class RobustComponent extends AtomComponent<{}, { setupError?: string }> {
+    beforeMount() {
+        try {
+            this.risky();
+        } catch (e) {
+            this.setState({ setupError: e instanceof Error ? e.message : String(e) });
+        }
+    }
+    private risky() {}
+}
+```
+
+## Do / Don&apos;t
+
+### Do
+
+-   Start subscriptions, intervals, global listeners
+-   Initialize configs and fire async requests
+-   Use setState to seed the first render (no extra render scheduled)
+
+### Don&apos;t
+
+-   Touch the DOM — use afterMount instead
+-   Block with heavy synchronous work
+-   Forget cleanup in beforeUnmount
+
+## Testing Tips
+
+-   Use jsdom for DOM tests
+-   Assert order: constructor → beforeMount → render
+-   Verify first render reflects setState called in beforeMount
